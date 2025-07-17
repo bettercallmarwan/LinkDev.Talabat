@@ -1,15 +1,8 @@
-using LinkDev.Talabat.Infrastructure.Persistence;
-using LinkDev.Talabat.Infrastructure.Persistence.Data;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using Microsoft.VisualBasic;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
-using System.Linq;
-using System;
-using LinkDev.Talabat.Core.Domain.Contracts;
+using LinkDev.Talabat.APIs.Controllers;
 using LinkDev.Talabat.APIs.Extensions;
-using LinkDev.Talabat.Core.Application.Abstraction;
 using LinkDev.Talabat.APIs.Services;
+using LinkDev.Talabat.Core.Application.Abstraction;
+using LinkDev.Talabat.Infrastructure.Persistence;
 namespace LinkDev.Talabat.APIs
 {
     public class Program
@@ -24,7 +17,7 @@ namespace LinkDev.Talabat.APIs
 
             // Add services to the container. (DI)
 
-            webApplicationBuilder.Services.AddControllers();
+            webApplicationBuilder.Services.AddControllers().AddApplicationPart(typeof(AssemblyInformation).Assembly);
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             webApplicationBuilder.Services.AddEndpointsApiExplorer();
             webApplicationBuilder.Services.AddSwaggerGen();
