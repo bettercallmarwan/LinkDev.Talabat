@@ -1,4 +1,4 @@
-﻿using LinkDev.Talabat.Core.Domain.Contracts;
+﻿using LinkDev.Talabat.Core.Domain.Contracts.Persistence;
 using LinkDev.Talabat.Infrastructure.Persistence.Data;
 using LinkDev.Talabat.Infrastructure.Persistence.Data.Interceptors;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -17,7 +17,9 @@ namespace LinkDev.Talabat.Infrastructure.Persistence
             //2. Configures it to use SQL Server with connection string from appsettings.json
             services.AddDbContext<StoreContext>((optionBuilder) =>
             {
-                optionBuilder.UseSqlServer(configuration.GetConnectionString("StoreContext"));
+                optionBuilder
+                .UseLazyLoadingProxies()
+                .UseSqlServer(configuration.GetConnectionString("StoreContext"));
             });
 
             services.AddScoped<IStoreContextInitializer, StoreContextInitializer>();
