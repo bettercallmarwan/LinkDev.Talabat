@@ -16,7 +16,15 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Repositories.Generic_Reposi
 
             // _dbContext.Set<Product>().where( p => p.ID.equals(1))
 
+            if(spec.OrderByDesc is not null)
+                query = query.OrderByDescending(spec.OrderByDesc);
+            else if(spec.OrderBy is not null)
+                query = query.OrderBy(spec.OrderBy);
+
+
             query = spec.Includes.Aggregate(query, (currentQuery, includeExpression) => currentQuery.Include(includeExpression));
+
+            
 
             return query;
         }

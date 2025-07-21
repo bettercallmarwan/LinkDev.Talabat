@@ -38,9 +38,9 @@ namespace LinkDev.Talabat.Core.Application.Services.Products
             return productToReturn;
         }
 
-        public async Task<IEnumerable<ProductToReturnDto>> GetProductsAsync()
+        public async Task<IEnumerable<ProductToReturnDto>> GetProductsAsync(string? sort, int? brandId, int? categoryId)
         {
-            var spec = new ProductWithBrandAndCategorySpecifications();
+            var spec = new ProductWithBrandAndCategorySpecifications(sort, brandId, categoryId);
 
 
 

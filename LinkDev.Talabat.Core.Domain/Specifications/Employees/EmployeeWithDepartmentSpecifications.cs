@@ -9,6 +9,7 @@ namespace LinkDev.Talabat.Core.Domain.Specifications.Employees
 {
     public class EmployeeWithDepartmentSpecifications : BaseSpecifications<Employee, int>
     {
+
         public EmployeeWithDepartmentSpecifications()
         {
             Includes.Add(E => E.Department!);

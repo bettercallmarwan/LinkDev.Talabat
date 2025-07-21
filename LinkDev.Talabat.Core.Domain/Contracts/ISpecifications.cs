@@ -10,6 +10,11 @@ namespace LinkDev.Talabat.Core.Domain.Contracts
         public List<Expression<Func<TEntity, object>>> Includes { get; set; }
         // for (include) operator
         // i made the func take object and not BaseEntity<TKey>, bec i am not sure if only one entity will be returned or icollection
+
+
+        public Expression<Func<TEntity, object>>? OrderBy { get; set; }
+        public Expression<Func<TEntity, object>>? OrderByDesc { get; set; }
+
     }
 
 }
