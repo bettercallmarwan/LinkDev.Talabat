@@ -52,6 +52,7 @@ namespace LinkDev.Talabat.APIs
 
             webApplication.UseHttpsRedirection(); // direct ant http to be https
 
+            webApplication.UseStaticFiles();
 
             webApplication.MapControllers(); 
             #endregion

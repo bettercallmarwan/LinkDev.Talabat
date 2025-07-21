@@ -8,7 +8,21 @@ namespace LinkDev.Talabat.Core.Domain.Specifications.Products
         {
             Includes.Add(p => p.Brand!);
             Includes.Add(p => p.Category!);
-
         }
+
+
+        public ProductWithBrandAndCategorySpecifications(int id) : base(id)
+        {
+            Includes.Add(p => p.Brand!);
+            Includes.Add(p => p.Category!);
+        }
+
+
+        private void AddIncludes()
+        {
+            Includes.Add(p => p.Brand!);
+            Includes.Add(p => p.Category!);
+        }
+
     }
 }

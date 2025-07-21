@@ -22,5 +22,22 @@ namespace LinkDev.Talabat.APIs.Controllers.Controllers.Products
             return product is null ? NotFound(new { statusCode = 404, message = "not found" }) : Ok(product);
         }
 
+        [HttpGet("brands")] // GET : /api/products/brands
+
+        public async Task<ActionResult<IEnumerable<BrandDto>>> GetBrands()
+        {
+            var brands = await serviceManager.ProductService.GetBrandsAsync();
+
+            return Ok(brands);
+        }
+
+        [HttpGet("categories")]// GET : /api/products/categories
+        public async Task<ActionResult<IEnumerable<CategoryDto>>> GetCategories()
+        {
+            var categories = await serviceManager.ProductService.GetCategoriesAsync();
+            return Ok(categories);
+        }
+        
+
     }
 }
