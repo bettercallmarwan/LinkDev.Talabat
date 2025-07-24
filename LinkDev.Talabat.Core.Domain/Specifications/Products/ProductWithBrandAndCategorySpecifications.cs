@@ -4,7 +4,7 @@ namespace LinkDev.Talabat.Core.Domain.Specifications.Products
 {
     public class ProductWithBrandAndCategorySpecifications : BaseSpecifications<Product, int>
     {
-        public ProductWithBrandAndCategorySpecifications(string? sort, int? brandId, int? categoryId)
+        public ProductWithBrandAndCategorySpecifications(string? sort, int? brandId, int? categoryId, int pageSize, int pageIndex, string? search)
             : base(
                   //p =>
                   //      (!brandId.HasValue || p.BrandId == brandId.Value)
@@ -12,39 +12,34 @@ namespace LinkDev.Talabat.Core.Domain.Specifications.Products
                   //      (!categoryId.HasValue || p.CategoryId == categoryId.Value)
 
                   p =>
+                        (!(string.IsNullOrEmpty(search)) ? p.NormalizedName.Contains(search) : true)
+                            &&
                         ((brandId.HasValue) ? p.BrandId == brandId.Value : true)
                             &&
                         ((categoryId.HasValue) ? p.CategoryId == categoryId.Value : true)
                   )
         {
-            AddIncludes();
-
-            AddOrderBy(p => p.Name);
+            AddIncludes();  
 
 
-            if (!string.IsNullOrEmpty(sort))
+
+            switch (sort)
             {
-                switch (sort)
-                {
-                    case "nameDesc":
-                        AddOrderByDesc(p => p.Name);
-                        break;
-                    case "priceAsc":    
-                        AddOrderBy(p => p.Price);
-                        break;
-                    case "priceDesc":
-                        AddOrderByDesc(p => p.Price);
-                        break;
-                    default:
-                        AddOrderBy(p => p.Name);
-                        break;
-                }
+                case "nameDesc":
+                    AddOrderByDesc(p => p.Name);
+                    break;
+                case "priceAsc":    
+                    AddOrderBy(p => p.Price);
+                    break;
+                case "priceDesc":
+                    AddOrderByDesc(p => p.Price);
+                    break;
+                default:
+                    AddOrderBy(p => p.Name);
+                    break;
             }
 
-            if(brandId is not null)
-            {
-                 
-            }
+            ApplyPagination(pageSize * (pageIndex - 1), pageSize);
         }
 
 

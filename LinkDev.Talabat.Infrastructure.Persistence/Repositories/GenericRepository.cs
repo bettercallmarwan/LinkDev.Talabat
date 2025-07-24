@@ -36,12 +36,18 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Repositories
         public void Delete(TEntity entity) => _dbContext.Set<TEntity>().Remove(entity);
         public void Update(TEntity entity) => _dbContext.Set<TEntity>().Update(entity);
 
+        public async Task<int> GetCountAsync(ISpecifications<TEntity, TKey> spec)
+        {
+            return await SpecificationsEvaluator<TEntity, TKey>.GetQuery(_dbContext.Set<TEntity>(), spec).CountAsync();
+        }
 
         #region HElper
         private IQueryable<TEntity> ApplySpecifictaions(ISpecifications<TEntity, TKey> spec)
         {
             return SpecificationsEvaluator<TEntity, TKey>.GetQuery(_dbContext.Set<TEntity>(), spec);
-        } 
+        }
+
+
         #endregion
 
     }
