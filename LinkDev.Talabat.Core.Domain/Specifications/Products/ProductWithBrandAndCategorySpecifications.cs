@@ -19,7 +19,7 @@ namespace LinkDev.Talabat.Core.Domain.Specifications.Products
                         ((categoryId.HasValue) ? p.CategoryId == categoryId.Value : true)
                   )
         {
-            AddIncludes();  
+            AddIncludes();
 
 
 
