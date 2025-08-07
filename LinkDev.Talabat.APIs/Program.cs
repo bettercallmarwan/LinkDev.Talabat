@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Web.Http.ModelBinding;
 using LinkDev.Talabat.APIs.Controllers.Errors;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using LinkDev.Talabat.APIs.Middlewares;
 
 namespace LinkDev.Talabat.APIs
 {
@@ -115,6 +116,8 @@ namespace LinkDev.Talabat.APIs
             #region Configure kestrel middlewares
 
             // Configure the HTTP request pipeline.
+
+            webApplication.UseMiddleware<CustomExceptionHandlerMiddleware>();
 
             if (webApplication.Environment.IsDevelopment())
             {
