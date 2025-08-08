@@ -22,7 +22,7 @@ namespace LinkDev.Talabat.APIs.Controllers.Controllers.Products
         {
             var product = await serviceManager.ProductService.GetProductAsync(id);
 
-            return product is null ? NotFound(new ApiResponse(404, $"Product with id:{id} is not found")) : Ok(product);
+            return Ok(product);
         }
 
         [HttpGet("brands")] // GET : /api/products/brands

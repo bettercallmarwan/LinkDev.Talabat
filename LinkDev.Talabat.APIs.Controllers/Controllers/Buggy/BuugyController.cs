@@ -1,23 +1,16 @@
-﻿    using LinkDev.Talabat.APIs.Controllers.Base;
-    using LinkDev.Talabat.APIs.Controllers.Errors;
-using LinkDev.Talabat.APIs.Controllers.Exceptions;
-using LinkDev.Talabat.Core.Application.Common.Exceptions;
+﻿using LinkDev.Talabat.APIs.Controllers.Base;
+using LinkDev.Talabat.APIs.Controllers.Errors;
 using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Mvc;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.Text.Json;
+using Microsoft.AspNetCore.Mvc;
 
-    namespace LinkDev.Talabat.APIs.Controllers.Controllers.Buggy
+namespace LinkDev.Talabat.APIs.Controllers.Controllers.Buggy
     {
         public class BuggyController : BaseApiController
         {
             [HttpGet("notfound")] // GET: /api/buggy/notfound
             public IActionResult GetNotFoundResult() // resources not found
             {
-                throw new NotFoundException();
-                //return NotFound(new ApiResponse(404));  //404
+                 return NotFound(new ApiResponse(404));
             }
 
 
