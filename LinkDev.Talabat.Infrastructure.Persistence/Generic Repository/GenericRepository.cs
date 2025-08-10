@@ -2,9 +2,9 @@
 using LinkDev.Talabat.Core.Domain.Contracts;
 using LinkDev.Talabat.Core.Domain.Contracts.Persistence;
 using LinkDev.Talabat.Infrastructure.Persistence.Data;
-using LinkDev.Talabat.Infrastructure.Persistence.Repositories.Generic_Repository;
+using LinkDev.Talabat.Infrastructure.Persistence.Generic_Repository;
 
-namespace LinkDev.Talabat.Infrastructure.Persistence.Repositories
+namespace LinkDev.Talabat.Infrastructure.Persistence.Generic_Repository
 {
     internal class GenericRepository<TEntity, TKey>(StoreContext _dbContext) : IGenericRepository<TEntity, TKey>
         where TEntity : BaseAuditableEntity<TKey>

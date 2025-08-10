@@ -5,8 +5,8 @@ using LinkDev.Talabat.APIs.Services;
 using LinkDev.Talabat.Core.Application;
 using LinkDev.Talabat.Core.Application.Abstraction;
 using LinkDev.Talabat.Infrastructure.Persistence;
+using LinkDev.Talabat.Inftrastructure;
 using Microsoft.AspNetCore.Mvc;
-
 namespace LinkDev.Talabat.APIs
 {
     public class Program
@@ -79,6 +79,7 @@ namespace LinkDev.Talabat.APIs
 
             webApplicationBuilder.Services.AddPersistenceServices(webApplicationBuilder.Configuration);
             webApplicationBuilder.Services.AddApplicationServices();
+            webApplicationBuilder.Services.AddInfrastrcutureServices(webApplicationBuilder.Configuration);
             #endregion
 
             var webApplication = webApplicationBuilder.Build();
