@@ -94,17 +94,18 @@ namespace LinkDev.Talabat.APIs
 
             // Configure the HTTP request pipeline.
 
-            webApplication.UseMiddleware<ExceptionHandlerMiddleware>();
-
+            // Register Swagger middleware before exception handling
             if (webApplication.Environment.IsDevelopment())
             {
                 webApplication.UseSwagger();
                 webApplication.UseSwaggerUI();
             }
 
+            webApplication.UseMiddleware<ExceptionHandlerMiddleware>();
+
             webApplication.UseHttpsRedirection(); // direct ant http to be https
 
-            webApplication.UseStatusCodePagesWithReExecute("/Errors/{0}"); // This middleware handles non-exceptional status codes (like 404, 401, 403) by re-executing the request pipeline to a new path — instead of just returning a plain status code response.
+            webApplication.UseStatusCodePagesWithReExecute("/Errors/{0}"); // This middleware handles non-exceptional status codes (like 404, 401, 403) by re-executing the request pipeline to a new path ï¿½ instead of just returning a plain status code response.
             //If a user hits a non-existing endpoint(/ api / invalid),
             //Instead of returning a plain 404,
             //ASP.NET will internally re-execute the pipeline and go to: /Errors/404

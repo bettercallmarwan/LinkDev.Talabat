@@ -1,7 +1,8 @@
 ﻿using LinkDev.Talabat.Core.Application.Abstraction.Services;
+using LinkDev.Talabat.Core.Application.Abstraction.Services.Basket;
 using LinkDev.Talabat.Core.Application.Mapping;
 using LinkDev.Talabat.Core.Application.Services;
-using Microsoft.Extensions.Configuration;
+using LinkDev.Talabat.Core.Application.Services.Basket;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace LinkDev.Talabat.Core.Application
@@ -14,6 +15,13 @@ namespace LinkDev.Talabat.Core.Application
             
             // Register ProductPictureUrlResolver for AutoMapper to resolve
             services.AddScoped<ProductPictureUrlResolver>();
+            
+            // Register BasketService
+            services.AddScoped<IBasketService, BasketService>();
+            
+            // Register the factory for BasketService
+            services.AddScoped<Func<IBasketService>>(serviceProvider => () => 
+                serviceProvider.GetRequiredService<IBasketService>());
             
             services.AddScoped<IServiceManager, ServiceManager>();
             return services;
