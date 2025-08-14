@@ -1,6 +1,7 @@
 ﻿using LinkDev.Talabat.Core.Domain.Contracts.Persistence;
 using LinkDev.Talabat.Infrastructure.Persistence.Data;
 using LinkDev.Talabat.Infrastructure.Persistence.Data.Interceptors;
+using LinkDev.Talabat.Infrastructure.Persistence.Identity;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,18 +14,27 @@ namespace LinkDev.Talabat.Infrastructure.Persistence
         // Extension method
         public static IServiceCollection AddPersistenceServices(this IServiceCollection services, IConfiguration configuration)
         {
+            #region Store Context
             //1. Registers StoreContext as a scoped service in the DI container
             //2. Configures it to use SQL Server with connection string from appsettings.json
-            services.AddDbContext<StoreContext>((optionBuilder) =>
+            services.AddDbContext<StoreDbContext>((optionBuilder) =>
             {
                 optionBuilder
                 .UseLazyLoadingProxies()
                 .UseSqlServer(configuration.GetConnectionString("StoreContext"));
             });
 
-            services.AddScoped<IStoreContextInitializer, StoreContextInitializer>();
+            services.AddScoped<IStoreContextInitializer, StoreDbInitializer>();
 
             services.AddScoped(typeof(ISaveChangesInterceptor), typeof(CutsomSaveChangesInterceptor));
+            #endregion
+
+            services.AddDbContext<StoreIdentityDbContext>((optionsBuilder) =>
+            {
+                optionsBuilder
+                .UseLazyLoadingProxies()
+                .UseSqlServer(configuration.GetConnectionString("IdentityContext"));
+            });
 
             services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
             return services;
