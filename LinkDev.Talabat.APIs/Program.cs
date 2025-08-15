@@ -4,8 +4,12 @@ using LinkDev.Talabat.APIs.Middlewares;
 using LinkDev.Talabat.APIs.Services;
 using LinkDev.Talabat.Core.Application;
 using LinkDev.Talabat.Core.Application.Abstraction;
+using LinkDev.Talabat.Core.Domain.Entities.Identity;
 using LinkDev.Talabat.Infrastructure.Persistence;
+using LinkDev.Talabat.Infrastructure.Persistence.Identity;
 using LinkDev.Talabat.Inftrastructure;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 namespace LinkDev.Talabat.APIs
 {
@@ -75,11 +79,14 @@ namespace LinkDev.Talabat.APIs
             webApplicationBuilder.Services.AddHttpContextAccessor();
             webApplicationBuilder.Services.AddScoped(typeof(ILoggedInUserService), typeof(LoggedInUserService));
 
-   
 
-            webApplicationBuilder.Services.AddPersistenceServices(webApplicationBuilder.Configuration);
             webApplicationBuilder.Services.AddApplicationServices();
+            webApplicationBuilder.Services.AddPersistenceServices(webApplicationBuilder.Configuration);
             webApplicationBuilder.Services.AddInfrastrcutureServices(webApplicationBuilder.Configuration);
+
+            webApplicationBuilder.Services.AddIdentityServices();
+
+
             #endregion
 
             var webApplication = webApplicationBuilder.Build();
@@ -87,7 +94,7 @@ namespace LinkDev.Talabat.APIs
 
             #region Apply Pending Migrations and Data Seeding
             // Asking runtime env for an object of StoreContext service explicitly
-            await webApplication.InitializeStoreContextAsync();
+            await webApplication.InitializeDbAsync();
             #endregion
 
             #region Configure kestrel middlewares

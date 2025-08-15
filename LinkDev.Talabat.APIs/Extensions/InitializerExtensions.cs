@@ -1,10 +1,10 @@
-﻿using LinkDev.Talabat.Core.Domain.Contracts.Persistence;
+﻿using LinkDev.Talabat.Core.Domain.Contracts.Persistence.DbInitialziers;
 
 namespace LinkDev.Talabat.APIs.Extensions
 {
     public static class InitializerExtensions
     {
-        public static async Task<WebApplication> InitializeStoreContextAsync(this WebApplication webApplication)
+        public static async Task<WebApplication> InitializeDbAsync(this WebApplication webApplication)
         {
             using var scope = webApplication.Services.CreateAsyncScope(); // 1. Creating a scope to get scoped services
             var services = scope.ServiceProvider; // 2.The ServiceProvider is like a "factory" or "warehouse" that knows how to create and deliver the services you've registered.
@@ -16,7 +16,9 @@ namespace LinkDev.Talabat.APIs.Extensions
             3.Instantiates the StoreContext
             4.Returns the configured instance
             5.Throws exception if the service isn't registered (that's why it's "Required")*/
-            var storeContextInitializer = services.GetRequiredService<IStoreContextInitializer>();
+            var storeContextInitializer = services.GetRequiredService<IStoreDbInitializer>();
+            var identityContextInitializer = services.GetRequiredService<IStoreIdentityDbInitializer>();
+
 
 
             var loggerFactory = services.GetRequiredService<ILoggerFactory>();
@@ -25,6 +27,9 @@ namespace LinkDev.Talabat.APIs.Extensions
             {
                 await storeContextInitializer.InitializeAsync();
                 await storeContextInitializer.SeedAsync();
+
+                await identityContextInitializer.InitializeAsync();
+                await identityContextInitializer.SeedAsync();
             }
             catch (Exception ex)
             {

@@ -1,7 +1,12 @@
 ﻿using LinkDev.Talabat.Core.Domain.Contracts.Persistence;
+using LinkDev.Talabat.Core.Domain.Contracts.Persistence.DbInitialziers;
+using LinkDev.Talabat.Core.Domain.Entities.Identity;
+using LinkDev.Talabat.Infrastructure.Persistence._Identity;
 using LinkDev.Talabat.Infrastructure.Persistence.Data;
 using LinkDev.Talabat.Infrastructure.Persistence.Data.Interceptors;
 using LinkDev.Talabat.Infrastructure.Persistence.Identity;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,7 +29,7 @@ namespace LinkDev.Talabat.Infrastructure.Persistence
                 .UseSqlServer(configuration.GetConnectionString("StoreContext"));
             });
 
-            services.AddScoped<IStoreContextInitializer, StoreDbInitializer>();
+            services.AddScoped<IStoreDbInitializer, StoreDbInitializer>();
 
             services.AddScoped(typeof(ISaveChangesInterceptor), typeof(CutsomSaveChangesInterceptor));
             #endregion
@@ -33,10 +38,15 @@ namespace LinkDev.Talabat.Infrastructure.Persistence
             {
                 optionsBuilder
                 .UseLazyLoadingProxies()
-                .UseSqlServer(configuration.GetConnectionString("IdentityContext"));
+                .UseSqlServer(configuration.GetConnectionString("IdentityContext")); 
             });
 
+            services.AddScoped(typeof(IStoreIdentityDbInitializer), typeof(StoreIdentityDbInitializer));
+
+
+
             services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
+
             return services;
         }
     }

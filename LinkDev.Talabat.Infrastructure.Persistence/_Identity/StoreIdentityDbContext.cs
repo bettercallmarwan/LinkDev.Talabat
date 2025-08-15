@@ -6,7 +6,7 @@ using System.Reflection;
 
 namespace LinkDev.Talabat.Infrastructure.Persistence.Identity
 {
-    internal class StoreIdentityDbContext : IdentityDbContext<ApplicationUser>
+    public class StoreIdentityDbContext : IdentityDbContext<ApplicationUser>
     {
         public StoreIdentityDbContext(DbContextOptions<StoreIdentityDbContext> options)
             : base(options)
@@ -18,12 +18,12 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Identity
         {
             base.OnModelCreating(builder);
 
-            //builder.ApplyConfiguration(new ApplicationUserConfigurations());
-            //builder.ApplyConfiguration(new AddressConfigurations());
+            builder.ApplyConfiguration(new ApplicationUserConfigurations());
+            builder.ApplyConfiguration(new AddressConfigurations());
 
 
-            builder.ApplyConfigurationsFromAssembly(typeof(AssemblyInformation).Assembly,
-                type => type.GetCustomAttribute<DbContextTypeAttribute>()?.DbContextType == typeof(StoreIdentityDbContext));
+            //builder.ApplyConfigurationsFromAssembly(typeof(AssemblyInformation).Assembly,
+            //    type => type.GetCustomAttribute<DbContextTypeAttribute>()?.DbContextType == typeof(StoreIdentityDbContext));
 
         }
 
