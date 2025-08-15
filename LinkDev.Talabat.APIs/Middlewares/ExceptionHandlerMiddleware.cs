@@ -65,11 +65,31 @@ namespace LinkDev.Talabat.APIs.Middlewares
 
                     break;
 
+                case ValidationException validationException:
+
+                    httpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                    httpContext.Response.ContentType = "application/json";
+
+                    response = new ApiValidationErrorResponse(ex.Message) { Errors = validationException.Errors};
+
+                    await httpContext.Response.WriteAsync(response.ToString());
+
+                    break;
                 case BadRequestException:
                     httpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
                     httpContext.Response.ContentType = "application/json";
 
                     response = new ApiResponse((int)HttpStatusCode.BadRequest, ex.Message);
+
+                    await httpContext.Response.WriteAsync(response.ToString());
+
+                    break;
+
+                case UnAuthorizedException:
+                    httpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                    httpContext.Response.ContentType = "application/json";
+
+                    response = new ApiResponse((int)HttpStatusCode.Unauthorized, ex.Message);
 
                     await httpContext.Response.WriteAsync(response.ToString());
 
