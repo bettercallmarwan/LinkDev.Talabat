@@ -18,10 +18,15 @@ namespace LinkDev.Talabat.Core.Application
             
             // Register BasketService
             services.AddScoped<IBasketService, BasketService>();
-            
+
             // Register the factory for BasketService
-            services.AddScoped<Func<IBasketService>>(serviceProvider => () => 
-                serviceProvider.GetRequiredService<IBasketService>());
+            //services.AddScoped<Func<IBasketService>>(serviceProvider => () => 
+            //    serviceProvider.GetRequiredService<IBasketService>());
+
+            services.AddScoped(typeof(Func<IBasketService>), (serviceProvider) =>
+            {
+                return () => serviceProvider.GetRequiredService<IBasketService>();
+            });
             
             services.AddScoped<IServiceManager, ServiceManager>();
             return services;
