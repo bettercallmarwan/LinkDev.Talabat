@@ -66,9 +66,9 @@ namespace LinkDev.Talabat.Core.Application.Services.Auth
 
         private async Task<string> GenerateTokenAysnc(ApplicationUser user)
         {
-            var userClaims = await userManager.GetClaimsAsync(user); // user claims
+            var userClaims = await userManager.GetClaimsAsync(user); // user unique private claims
 
-            // user roles to put as claim in jwt
+            // user roles to put as claims in jwt
             var rolesAsClaims = new List<Claim>();
             var roles = await userManager.GetRolesAsync(user);
             foreach(var role in roles)

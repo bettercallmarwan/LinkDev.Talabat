@@ -46,7 +46,7 @@ namespace LinkDev.Talabat.APIs
 
                         return new BadRequestObjectResult(new ApiValidationErrorResponse()
                         {
-                            Errors = errors
+                            Errors = (IEnumerable<string>)errors
                         });
                     };
                 })

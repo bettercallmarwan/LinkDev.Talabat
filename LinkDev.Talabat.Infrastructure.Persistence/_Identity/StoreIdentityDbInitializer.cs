@@ -11,8 +11,6 @@ namespace LinkDev.Talabat.Infrastructure.Persistence._Identity
     {
         public override async Task SeedAsync()
         {
-            if (!_userManager.Users.Any())
-            {
                 var user = new ApplicationUser()
                 { 
                     DisplayName = "Marwan Osama",
@@ -22,7 +20,7 @@ namespace LinkDev.Talabat.Infrastructure.Persistence._Identity
                 };
 
                 await _userManager.CreateAsync(user, "P@sswOrd"); 
-            }
         }
     }
 }
+//Password1_
