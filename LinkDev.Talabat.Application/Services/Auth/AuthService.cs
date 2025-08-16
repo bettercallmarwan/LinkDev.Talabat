@@ -3,6 +3,7 @@ using LinkDev.Talabat.Core.Application.Abstraction.Services.Auth;
 using LinkDev.Talabat.Core.Application.Exceptions;
 using LinkDev.Talabat.Core.Domain.Entities.Identity;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -10,9 +11,11 @@ using System.Text;
 
 namespace LinkDev.Talabat.Core.Application.Services.Auth
 {
-    public class AuthService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager) : IAuthService
+    public class AuthService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IOptions<JwtSettings> jwtSettings) : IAuthService
     // the SignInManager is from the jwt bearer package and not from the identity package
     {
+        private readonly JwtSettings _jwtSettings = jwtSettings.Value;
+
         public async Task<UserDto> LoginAsync(LoginDto model)
         {
             var user = await userManager.FindByEmailAsync(model.Email);
@@ -83,13 +86,13 @@ namespace LinkDev.Talabat.Core.Application.Services.Auth
             .Union(userClaims)
             .Union(rolesAsClaims);
 
-            var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("a-string-secret-at-least-256-bits-long"));
+            var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Key));
             var signingCredentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256);
 
             var tokenObj = new JwtSecurityToken(
-                issuer: "TalabatIdentity",
-                audience: "TalabatUsers",
-                expires: DateTime.UtcNow.AddMinutes(10),
+                issuer: _jwtSettings.Issuer,
+                audience: _jwtSettings.Audience,
+                expires: DateTime.UtcNow.AddMinutes(_jwtSettings.DurationInMinutes),
                 claims: Claims,
                 signingCredentials: signingCredentials
             );

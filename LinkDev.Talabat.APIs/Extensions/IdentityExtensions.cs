@@ -1,16 +1,20 @@
-﻿using LinkDev.Talabat.Core.Application.Abstraction.Services.Auth;
+﻿using LinkDev.Talabat.Core.Application.Abstraction.Models.Auth;
+using LinkDev.Talabat.Core.Application.Abstraction.Services.Auth;
 using LinkDev.Talabat.Core.Application.Services.Auth;
 using LinkDev.Talabat.Core.Domain.Entities.Identity;
 using LinkDev.Talabat.Infrastructure.Persistence.Identity;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 
 namespace LinkDev.Talabat.APIs.Extensions
 {
     public static class IdentityExtensions
     {
-        public static IServiceCollection AddIdentityServices(this IServiceCollection services)
+        public static IServiceCollection AddIdentityServices(this IServiceCollection services, IConfiguration configuration)
         {
+            // configured JwtSettings, so when JwtSettings is requested from the jwt container
+            // it's properties are initialized with values from jwtSettings, which is in appsettings
+            services.Configure<JwtSettings>(configuration.GetSection("jwtSettings"));
+
             services.AddIdentity<ApplicationUser, IdentityRole>(identityOptions =>
             {
                 identityOptions.User.RequireUniqueEmail = true;
