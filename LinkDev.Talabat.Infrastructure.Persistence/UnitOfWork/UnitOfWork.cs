@@ -5,7 +5,7 @@ using LinkDev.Talabat.Infrastructure.Persistence.Generic_Repository;
 using System.Collections.Concurrent;
 
 namespace LinkDev.Talabat.Infrastructure.Persistence.UnitOfWork
-{
+{   
     public class UnitOfWork : IUnitOfWork
     {
         private readonly StoreDbContext _dbContext;

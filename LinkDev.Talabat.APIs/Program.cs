@@ -113,10 +113,11 @@ namespace LinkDev.Talabat.APIs
             //Instead of returning a plain 404,
             //ASP.NET will internally re-execute the pipeline and go to: /Errors/404
 
+            webApplication.UseStaticFiles();
+
             webApplication.UseAuthentication();
             webApplication.UseAuthorization();
 
-            webApplication.UseStaticFiles();
 
             webApplication.MapControllers(); 
             #endregion
