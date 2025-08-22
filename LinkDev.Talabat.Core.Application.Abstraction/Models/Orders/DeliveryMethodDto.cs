@@ -1,18 +1,11 @@
-﻿namespace LinkDev.Talabat.Core.Domain.Entities.Orders
+﻿namespace LinkDev.Talabat.Core.Application.Abstraction.Models.Orders
 {
-    //table
-    public class DeliveryMethod : BaseEntity<int>
+    public class DeliveryMethodDto
     {
-        public DeliveryMethod()
-        {
-            
-        }
+        public int Id { get; set; }
         public required string ShortName { get; set; }
         public required string Description { get; set; }
         public decimal Cost { get; set; }
         public required string DeliveryTime { get; set; }
-
-
-
     }
 }

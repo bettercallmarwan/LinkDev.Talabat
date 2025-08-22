@@ -1,10 +1,12 @@
-﻿namespace LinkDev.Talabat.Core.Domain.Entities.Orders
+﻿using LinkDev.Talabat.Core.Domain.Entities.Orders;
+
+public class OrderItem : BaseAuditableEntity<int>
 {
-    //table
-    public class OrderItem : BaseAuditableEntity<int>
+    public OrderItem()
     {
-        public required ProductItemOrdered product { get; set; }
-        public decimal Price { get; set; }
-        public int Quantity { get; set; }
+        
     }
+    public virtual ProductItemOrdered product { get; set; } // make virtual
+    public decimal Price { get; set; }
+    public int Quantity { get; set; }
 }

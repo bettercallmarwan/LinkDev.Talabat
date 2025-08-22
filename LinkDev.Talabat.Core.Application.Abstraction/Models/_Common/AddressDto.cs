@@ -1,9 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace LinkDev.Talabat.Core.Domain.Entities.Orders
+﻿namespace LinkDev.Talabat.Core.Application.Abstraction.Models.Common
 {
-    [Owned]
-    public class Address
+    public class AddressDto
     {
         public required string FirstName { get; set; }
         public required string LastName { get; set; }
