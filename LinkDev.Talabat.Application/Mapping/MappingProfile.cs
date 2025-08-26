@@ -6,7 +6,6 @@ using LinkDev.Talabat.Core.Application.Abstraction.Models.Orders;
 using LinkDev.Talabat.Core.Application.Abstraction.Models.Products;
 using LinkDev.Talabat.Core.Domain.Entities.Basket;
 using LinkDev.Talabat.Core.Domain.Entities.Employees;
-using LinkDev.Talabat.Core.Domain.Entities.Identity;
 using LinkDev.Talabat.Core.Domain.Entities.Orders;
 using LinkDev.Talabat.Core.Domain.Entities.Products;
 using Address = LinkDev.Talabat.Core.Domain.Entities.Orders.Address;
@@ -46,3 +45,7 @@ namespace LinkDev.Talabat.Core.Application.Mapping
         }
     }
 }
+
+
+
+
